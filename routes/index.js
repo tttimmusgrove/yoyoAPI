@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var knex = require('../db/knex');
+var knex = require('../knex');
 /**
  * @api {get} /api/activity Request all activity information
  * @apiName GetActivity
@@ -22,7 +22,7 @@ var knex = require('../db/knex');
        ]
  */
 router.get('/yoyo', function(req, res, next) {
-    knex('yoyo').select('yoyo.id as yoyo_id', 'type.id as type_id', 'type.type', 'yoyo.name', 'yoyo.price', 'yoyo.difficult', 'yoyo.rating', 'yoyo.imageURL'. 'yoyo.videoUrl').join('type', function() {
+    knex('yoyo').select('yoyo.id as yoyo_id', 'type.id as type_id', 'type.type', 'yoyo.name', 'yoyo.price', 'yoyo.difficulty', 'yoyo.rating', 'yoyo.imageURL', 'yoyo.videoUrl').join('type', function() {
         this.on('yoyo.type_id', '=', 'type.id')
     }).then(function(data) {
         res.json(data);
@@ -48,7 +48,7 @@ router.get('/yoyo', function(req, res, next) {
        ]
  */
 router.get('/yoyo/:id', function(req, res, next) {
-    knex('yoyo').select('yoyo.id as yoyo_id', 'type.id as type_id', 'type.type', 'yoyo.name', 'yoyo.price', 'yoyo.difficult', 'yoyo.rating', 'yoyo.imageURL'. 'yoyo.videoUrl').join('type', function() {
+    knex('yoyo').select('yoyo.id as yoyo_id', 'type.id as type_id', 'type.type', 'yoyo.name', 'yoyo.price', 'yoyo.difficulty', 'yoyo.rating', 'yoyo.imageURL', 'yoyo.videoUrl').join('type', function() {
         this.on('yoyo.type_id', '=', 'type.id')
     }).where('yoyo.id', '=', req.params.id).then(function(data) {
         res.json(data);
